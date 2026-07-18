@@ -1,10 +1,32 @@
 """
 Configuration for Clean Stream Pro Wash Meta Ads Management
+All secrets come from environment variables (set in Railway or a local .env file).
 """
+import os
+
+# Load .env file when running locally (ignored in production)
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+except ImportError:
+    pass
 
 # Meta API Configuration
-ACCESS_TOKEN = "EAAKj3HprtxsBROcBhHCVEDluSnqiUXR7uuB536e1uZCpCPjWueINbQW0EQmYPJhrTGWi7Vz1aSKBeU5JtsmuGd6Dwv3ZBjH3cVPOiAwgrzwps0g2zhSdQiabENm0Yy7yTU5pbbHVvVokZCngARzCmwdrBzEpZAXD9F1hwAUEbZBy3ZAtOZBxcKVYnlyLLBR7QZDZD"
+ACCESS_TOKEN = os.environ["META_ACCESS_TOKEN"]
 API_VERSION = "v21.0"
+
+# OpenAI API Configuration (for AI image generation)
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+
+# Email Notification Configuration
+NOTIFY_EMAIL = os.environ["NOTIFY_EMAIL"]
+NOTIFY_EMAIL_PASSWORD = os.environ["NOTIFY_EMAIL_PASSWORD"]
+
+# Twilio SMS Configuration
+TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+TWILIO_AUTH_TOKEN  = os.environ["TWILIO_AUTH_TOKEN"]
+TWILIO_FROM_NUMBER = os.environ["TWILIO_FROM_NUMBER"]
+TWILIO_TO_NUMBER   = os.environ["TWILIO_TO_NUMBER"]
 BASE_URL = f"https://graph.facebook.com/{API_VERSION}"
 
 # Business Info
@@ -38,9 +60,6 @@ TARGETING = {
             {"key": "2430536", "name": "Kalamazoo", "radius": 10, "distance_unit": "mile"},
             {"key": "2431590", "name": "Lansing", "radius": 25, "distance_unit": "mile"},
             {"key": "2435925", "name": "Mount Pleasant", "radius": 29, "distance_unit": "mile"},
-        ],
-        "regions": [
-            {"key": "DMA:563", "name": "Muskegon County"},
         ],
     },
     "age_min": 25,

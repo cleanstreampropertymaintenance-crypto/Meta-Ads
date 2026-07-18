@@ -2,12 +2,17 @@
 audit_data.json
 optimization_results.json
 consolidation_results.json
+seen_leads.json
+daemon.lock
+daemon.log
+webhook_debug.log
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 .env
+.env.*
 
 # Images uploaded for ads
 uploads/
