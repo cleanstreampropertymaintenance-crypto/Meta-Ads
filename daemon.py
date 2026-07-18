@@ -283,7 +283,12 @@ def start_webhook_listener():
     app.run(host='0.0.0.0', port=WEBHOOK_PORT, debug=False, use_reloader=False)
 
 
+ON_RAILWAY = "RAILWAY_ENVIRONMENT" in os.environ
+
 def acquire_lock():
+    # Skip lock on Railway — only one instance ever runs there
+    if ON_RAILWAY:
+        return
     if os.path.exists(LOCK_FILE):
         with open(LOCK_FILE) as f:
             pid = f.read().strip()
@@ -297,6 +302,8 @@ def acquire_lock():
         f.write(str(os.getpid()))
 
 def release_lock():
+    if ON_RAILWAY:
+        return
     if os.path.exists(LOCK_FILE):
         os.remove(LOCK_FILE)
 
